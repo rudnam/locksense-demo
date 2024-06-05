@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import mqtt, { MqttClient } from "mqtt";
-import LockToggle from "./LockToggle";
+import LockToggle from "./components/LockToggle";
 
 let mqttClient: MqttClient | null = null;
 
@@ -38,6 +38,12 @@ export default function Home() {
       logInfo("Connected to the MQTT server.");
       mqttClient!.subscribe("locks/-NycrH2cYavPQDTVmfKp/command", { qos: 0 });
       logInfo("Subscribed to locks/-NycrH2cYavPQDTVmfKp/command.");
+      let message = isLocked ? "locked" : "unlocked";
+      mqttClient!.publish(
+        "locks/-NycrH2cYavPQDTVmfKp/status",
+        message,
+        { qos: 0 }
+      );
     });
 
     mqttClient.on("reconnect", () => {
@@ -78,6 +84,7 @@ export default function Home() {
         mqttClient.end();
       }
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const toggleLock = () => {
