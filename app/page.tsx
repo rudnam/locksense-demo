@@ -110,7 +110,7 @@ export default function Home() {
       </div>
       <div className="w-full max-w-90 p-4 flex flex-col items-center">
         <h2 className="text-xl">Console Logs</h2>
-        <div className="max-h-64 overflow-y-auto p-4 text-left">
+        <div className="max-h-64 overflow-y-auto p-4 text-left font-mono mt-4 bg-neutral-950 rounded-lg border border-neutral-900">
           {logs.map((log, index) => (
             <p key={index}>{log}</p>
           ))}
